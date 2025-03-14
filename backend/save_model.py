@@ -1,30 +1,51 @@
-import joblib
+import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+import joblib
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
-# Dummy training data (Replace this with actual training data if available)
-X_train = np.random.rand(100, 5)  # 100 samples, 5 features
-y_train = np.random.randint(0, 2, 100)  # 100 labels (0 = Legitimate, 1 = Fraudulent)
+# Load trained model
+def load_model(model_path="fraud_detection_model.pkl"):
+    """Load the trained fraud detection model."""
+    model = joblib.load(model_path)
+    return model
 
-# Train a simple model (Replace this with your actual trained model)
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+# Load label encoders and scaler
+scaler = joblib.load("scaler.pkl")  # Load the StandardScaler
+label_encoders = joblib.load("label_encoders.pkl")  # Load LabelEncoders
 
-# Save the trained model
-joblib.dump(model, "fraud_detection_model.pkl")
+def preprocess_new_data(new_data):
+    """Preprocess new transaction data to match the training format."""
+    df = pd.DataFrame([new_data])  # Convert dictionary to DataFrame
 
-# Save LabelEncoders and Scaler (Needed for preprocessing)
-scaler = StandardScaler()
-scaler.fit(X_train)
-joblib.dump(scaler, "scaler.pkl")
+    # Apply Label Encoding for categorical features
+    for col in ["transactionHash", "sender", "receiver", "transaction_type"]:
+        if col in df.columns and col in label_encoders:
+            df[col] = df[col].map(lambda x: label_encoders[col].transform([x])[0] if x in label_encoders[col].classes_ else -1)
 
-label_encoders = {
-    "transactionHash": LabelEncoder().fit(["example_hash"]),
-    "sender": LabelEncoder().fit(["example_sender"]),
-    "receiver": LabelEncoder().fit(["example_receiver"]),
-    "transaction_type": LabelEncoder().fit(["transfer", "contract_interaction"])
+    # Scale numerical features
+    df_scaled = scaler.transform(df)
+    
+    return df_scaled
+
+def predict_fraud(new_data):
+    """Predict fraud for a new transaction."""
+    model = load_model()
+    preprocessed_data = preprocess_new_data(new_data)
+    prediction = model.predict(preprocessed_data)
+    
+    return "Fraudulent Transaction" if prediction[0] == 1 else "Legitimate Transaction"
+
+# Example Transaction Data
+new_transaction = {
+    "blockNumber": 1876534,
+    "gasUsed": 21000,
+    "transactionHash": "0xa3f9b845b7cf9d6b24a24f5bb1679ff917b36fc1e0a61f8b3b2a22c3b3e1d1a5",
+    "sender": "0x24dc2b2153609c6c88e26dad6f20ef54c52bc3f8e04e7d7eae9f6bba6c69cb82",
+    "receiver": "0x5e7894b457cfd654d534a5679ef54c5b2b362f8e04e7d7eae9f6bba6c69cb88c",
+    "value": 0.5,
+    "transaction_type": "contract_interaction"
 }
-joblib.dump(label_encoders, "label_encoders.pkl")
 
-print("✅ Model and preprocessing files saved successfully!")
+# Run prediction
+result = predict_fraud(new_transaction)
+print("Prediction:", result)
