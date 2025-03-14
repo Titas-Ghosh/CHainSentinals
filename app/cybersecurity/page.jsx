@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 
 export default function Blacklist(){
     const [blacklistedWallets, setBlacklistedWallets] = useState([]);
-    const [searchWallet, setSearchWallet] = useState(""); // Stores user input
-    const [searchResult, setSearchResult] = useState(null); // Stores search result
+    const [searchWallet, setSearchWallet] = useState(""); // user input
+    const [searchResult, setSearchResult] = useState(null); //  search result
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/blacklist")

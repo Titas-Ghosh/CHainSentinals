@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Chip from "./Chip";
+
 
 export default function Flashcards() {
   return (
