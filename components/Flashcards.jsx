@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Chip from "./Chip";
 
-export default function CyberSecuritySection() {
+export default function Flashcards() {
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#080A0C] text-white px-8 ">
       {/* Split Section */}

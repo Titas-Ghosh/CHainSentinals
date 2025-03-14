@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const Blacklist = () => {
+export default function Blacklist(){
     const [blacklistedWallets, setBlacklistedWallets] = useState([]);
     const [searchWallet, setSearchWallet] = useState(""); // Stores user input
     const [searchResult, setSearchResult] = useState(null); // Stores search result
@@ -48,4 +48,4 @@ const Blacklist = () => {
     );
 };
 
-export default Blacklist;
+
