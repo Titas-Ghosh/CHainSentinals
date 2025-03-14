@@ -1,17 +1,19 @@
-import CyberSecurityUI from '@/components/CybersecurityUI'
-import Hero from '@/components/Hero'
-import Main from '@/components/Main'
-import React from 'react'
-import Flashcards from '@/components/Flashcards'
+'use client';
+import Hero from "@/components/Hero";
+import Flashcards from "@/components/Flashcards";
+import Link from "next/link";
 
-const Homepage=()=> {
-  return(
-    <Main>
+const Homepage = () => {
+  return (
+    <main className="bg-black text-white">
       <Hero />
       <Flashcards />
-    </Main>
-  )
-  
-}
-export default Homepage;
 
+      
+       
+      
+    </main>
+  );
+};
+
+export default Homepage;
