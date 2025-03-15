@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import joblib
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
@@ -18,14 +17,22 @@ def preprocess_new_data(new_data):
     df = pd.DataFrame([new_data])  # Convert dictionary to DataFrame
 
     # Apply Label Encoding for categorical features
-    for col in ["transactionHash", "sender", "receiver", "transaction_type"]:
+    categorical_columns = ["transactionHash", "sender", "receiver", "transaction_type"]
+    for col in categorical_columns:
         if col in df.columns and col in label_encoders:
             df[col] = df[col].map(lambda x: label_encoders[col].transform([x])[0] if x in label_encoders[col].classes_ else -1)
 
-    # Scale numerical features
-    df_scaled = scaler.transform(df)
-    
+    # Ensure all columns are present before scaling
+    required_columns = ["blockNumber", "gasUsed", "value", "transactionHash", "sender"]
+    for col in required_columns:
+        if col not in df.columns:
+            df[col] = 0  # Default value if missing
+
+    # **Fix: Convert DataFrame to NumPy Array before Scaling**
+    df_scaled = scaler.transform(df[required_columns].values)  # Convert to NumPy array
+
     return df_scaled
+
 
 def predict_fraud(new_data):
     """Predict fraud for a new transaction."""
