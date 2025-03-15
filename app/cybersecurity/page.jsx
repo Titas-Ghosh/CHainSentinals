@@ -6,6 +6,7 @@ import axios from "axios";
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/ws/transactions";
 const BLACKLIST_API = process.env.NEXT_PUBLIC_BLACKLIST_API || "http://localhost:8000/blacklisted_list";
 
+
 function Blacklisted() {
   const [transactions, setTransactions] = useState([]);
   const [blacklist, setBlacklist] = useState([]);
