@@ -83,6 +83,7 @@ const TransactionTable = ({ transactions }) => (
           <tr>
             <td colSpan="3" className="text-center p-4 text-gray-400">
               No transactions yet...
+              pls wait a few minutes..
             </td>
           </tr>
         ) : (
