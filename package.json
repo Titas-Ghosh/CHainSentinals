@@ -29,7 +29,7 @@
     "tailwindcss": "^4.0.14"
   },
   "engines": {
-  "node": "16.x"
+  "node": "18.x"
 }
 
 }
