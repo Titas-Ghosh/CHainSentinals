@@ -38,12 +38,12 @@ function Shield({ globeRef }) {
   useFrame(({ camera }) => {
     if (globeRef.current && shieldRef.current) {
       const time = performance.now() * 0.001;
-      const radius = 1.5; // Orbit radius around the Earth
+      const radius = 1.5; 
       const x = Math.cos(time) * radius;
       const z = Math.sin(time) * radius;
       
-      shieldRef.current.position.set(x, 0, z); // Keep y at 0 for equator orbit
-      shieldRef.current.lookAt(camera.position); // Make shield face the user
+      shieldRef.current.position.set(x, 0, z); 
+      shieldRef.current.lookAt(camera.position); 
     }
   });
 

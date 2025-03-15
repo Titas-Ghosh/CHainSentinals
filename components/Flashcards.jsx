@@ -6,16 +6,16 @@ import { motion } from "framer-motion";
 export default function Flashcards() {
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#080A0C] text-white px-8 ">
-      {/* Split Section */}
+      
       <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl gap-12 mb-16">
-        {/* Left - Image or 3D model */}
+        
         <div className="w-full md:w-1/2 flex justify-center">
           <div className="w-[90%] h-[300px] md:h-[400px] bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center shadow-lg">
           <img src="/cybersecurity.webp" alt="" />
           </div>
         </div>
         
-        {/* Right - Content */}
+        
         <div className="w-full md:w-1/2 text-left">
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-wide text-white mb-4">
             Chain Sentinel: The Future of Web3 Security
@@ -32,7 +32,7 @@ export default function Flashcards() {
         </div>
       </div>
 
-      {/* Feature Cards */}
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-6xl">
         {features.map((feature, index) => (
           <motion.div
