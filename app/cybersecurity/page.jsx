@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Use environment variables to switch URLs
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/ws/transactions";
-const BLACKLIST_API = process.env.NEXT_PUBLIC_BLACKLIST_API || "http://localhost:8000/blacklisted_list";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL ;
+const BLACKLIST_API = process.env.NEXT_PUBLIC_BLACKLIST_API ;
 
 function Blacklisted() {
   const [transactions, setTransactions] = useState([]);
