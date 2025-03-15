@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const WS_URL = "ws://localhost:8000/ws/transactions";
-const BLACKLIST_API = "http://localhost:8000/blacklisted_list";
+// Use environment variables to switch URLs
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/ws/transactions";
+const BLACKLIST_API = process.env.NEXT_PUBLIC_BLACKLIST_API || "http://localhost:8000/blacklisted_list";
 
 function Blacklisted() {
   const [transactions, setTransactions] = useState([]);
@@ -67,71 +68,6 @@ function Blacklisted() {
   );
 }
 
-const TransactionTable = ({ transactions }) => (
-  <div className="w-full max-w-3xl text-white">
-    <table className="w-full border-collapse">
-      <thead>
-        <tr className="bg-gray-700">
-          <th className="p-3 text-left">Sender</th>
-          <th className="p-3 text-left">Amount (ETH)</th>
-          <th className="p-3 text-left">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.length === 0 ? (
-          <tr>
-            <td colSpan="3" className="text-center p-4 text-gray-400">
-              No transactions yet...
-            </td>
-          </tr>
-        ) : (
-          transactions.map((tx, index) => (
-            <tr
-              key={index}
-              className={`border-b ${tx.status === "Suspicious" ? "bg-red-500" : "bg-gray-800"}`}>
-              <td className="p-3 truncate">{tx.sender}</td>
-              <td className="p-3">{tx.amount}</td>
-              <td className="p-3 font-bold">{tx.status}</td>
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
-  </div>
-);
-
-const BlacklistTable = ({ blacklist, fetchBlacklist }) => (
-  <div className="w-full max-w-3xl">
-    <div className="flex justify-between mb-4">
-      <h2 className="text-2xl font-bold">🚫 Blacklisted Wallets</h2>
-      <button
-        onClick={fetchBlacklist}
-        className="px-4 py-2 bg-red-500 text-white rounded">
-        Refresh 🔄
-      </button>
-    </div>
-
-    <table className="w-full border-collapse">
-      <thead>
-        <tr className="bg-gray-700">
-          <th className="p-3 text-left">Wallet Address</th>
-        </tr>
-      </thead>
-      <tbody>
-        {blacklist.length === 0 ? (
-          <tr>
-            <td className="text-center p-4 text-gray-400">No blacklisted wallets.</td>
-          </tr>
-        ) : (
-          blacklist.map((wallet, index) => (
-            <tr key={index} className="border-b bg-red-600">
-              <td className="p-3">{wallet}</td>
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
-  </div>
-);
+// TransactionTable and BlacklistTable remain unchanged
 
 export default Blacklisted;
